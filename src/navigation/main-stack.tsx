@@ -22,7 +22,7 @@ function MainStack() {
   return (
     <Stack.Navigator initialRouteName="home-screen">
       <Stack.Screen
-        options={{title: 'Home'}}
+        options={{title: 'TODO'}}
         name="home-screen"
         component={Screen.HomeScreen}
       />
