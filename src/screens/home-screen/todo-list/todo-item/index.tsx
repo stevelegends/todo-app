@@ -7,7 +7,7 @@ import {Text, TextStyle, View} from 'react-native';
 import {styles} from './styles';
 
 // theme
-import appStyle from 'src/theme/app-style';
+import {appStyle} from 'src/theme';
 
 // type
 import type {Todo} from 'src/store/todo/type';
