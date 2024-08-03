@@ -7,4 +7,7 @@
  */
 export default {
   schemaVersion: 1,
+  realmPath: 'App',
+  /** default Int8Array(64) | please create your own. */
+  encryptionKey: new Int8Array(64),
 };
