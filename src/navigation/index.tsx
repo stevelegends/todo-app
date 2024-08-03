@@ -18,7 +18,7 @@ import {useColorScheme} from 'react-native';
 import MainStack, {AppStackParamList} from 'src/navigation/main-stack';
 
 // theme
-import appStyle from 'src/theme/app-style';
+import {appStyle} from 'src/theme';
 
 export const navigationRef = createNavigationContainerRef<AppStackParamList>();
 

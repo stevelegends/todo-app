@@ -1,51 +1,47 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useEffect} from 'react';
 
 // modules
-import {SafeAreaView, FlatList, ListRenderItem} from 'react-native';
+import {SafeAreaView} from 'react-native';
 
 // styles
 import {styles} from './styles';
 
 // type
 import type {AppStackScreenProps} from 'src/navigation/main-stack';
-import type {Todo} from 'src/store/todo/type';
 
 // components
-import {PressableText, SeparatorView} from 'src/components/atoms';
-import {TodoItem} from './todo-item';
+import {AnimatedPopup, PressableText} from 'src/components/atoms';
+import {useAnimatedPopup} from 'src/components/atoms/animated-popup/useAnimatedPopup';
+import {TodoForm} from './todo-form';
+import {TodoList} from './todo-list';
+
+// theme
+import {appStyle} from 'src/theme';
 
 interface Props extends AppStackScreenProps<'home-screen'> {}
 
 export const HomeScreen = (_props: Props) => {
-  const todoList = [
-    {
-      _id: '1',
-      title: 'test',
-      description: 'test 1',
-      isComplete: false,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      _id: '2',
-      title: 'test',
-      description: 'test 2',
-      isComplete: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-  ];
+  const animatedPopup = useAnimatedPopup();
 
-  const renderItem: ListRenderItem<Todo> = useCallback(({item}) => {
-    return <TodoItem item={item} />;
-  }, []);
+  const handleAddOnPress = (title: string, description: string) => {
+    animatedPopup.onClose();
+    console.log('TODO', title, description);
+  };
 
-  const ItemSeparatorComponent = useCallback(() => <SeparatorView />, []);
+  const handleCancelOnPress = () => {
+    animatedPopup.onClose();
+  };
 
   useEffect(() => {
     function onSetHeader() {
       _props.navigation.setOptions({
-        headerRight: () => <PressableText text="➕" />,
+        headerRight: () => (
+          <PressableText
+            pressProps={{style: appStyle.buttonSizeS}}
+            text="➕"
+            onPress={animatedPopup.onOpen}
+          />
+        ),
       });
     }
     onSetHeader();
@@ -53,13 +49,13 @@ export const HomeScreen = (_props: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={todoList}
-        keyExtractor={item => item._id}
-        renderItem={renderItem}
-        ItemSeparatorComponent={ItemSeparatorComponent}
-        initialNumToRender={10}
-      />
+      <TodoList />
+      <AnimatedPopup ref={animatedPopup.ref}>
+        <TodoForm
+          addOnPress={handleAddOnPress}
+          cancelOnPress={handleCancelOnPress}
+        />
+      </AnimatedPopup>
     </SafeAreaView>
   );
 };
