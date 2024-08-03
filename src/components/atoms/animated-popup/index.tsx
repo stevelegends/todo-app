@@ -66,4 +66,13 @@ const $container: ViewStyle = {
   padding: spacing.md,
   position: 'absolute',
   width: '100%',
+  shadowColor: colors.palette.neutral900,
+  shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.25,
+  shadowRadius: 3.84,
+
+  elevation: 5,
 };

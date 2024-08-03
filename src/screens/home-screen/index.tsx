@@ -18,14 +18,20 @@ import {TodoList} from './todo-list';
 // theme
 import {appStyle} from 'src/theme';
 
+// store
+import {useAppDispatch} from 'src/store/store';
+import {addTodoAction} from 'src/store/todo/saga';
+
 interface Props extends AppStackScreenProps<'home-screen'> {}
 
 export const HomeScreen = (_props: Props) => {
+  const dispatch = useAppDispatch();
+
   const animatedPopup = useAnimatedPopup();
 
   const handleAddOnPress = (title: string, description: string) => {
     animatedPopup.onClose();
-    console.log('TODO', title, description);
+    dispatch(addTodoAction({title, description}));
   };
 
   const handleCancelOnPress = () => {
