@@ -17,17 +17,23 @@ import {PressableText} from 'src/components/atoms';
 
 type Props = {
   item: Todo;
+  deleteOnPress?: (_id: string) => void;
+  updateOnPress?: (_id: string) => void;
 };
 
-export const TodoItem = ({item}: Props) => {
+export const TodoItem = ({
+  item,
+  updateOnPress = () => undefined,
+  deleteOnPress = () => undefined,
+}: Props) => {
   const labelStyle: TextStyle = {
     textDecorationLine: item.isComplete ? 'line-through' : 'none',
   };
   const handleUpdateOnPress = () => {
-    // TODO
+    updateOnPress(item._id);
   };
   const handleDeleteOnPress = () => {
-    // TODO
+    deleteOnPress(item._id);
   };
   return (
     <View style={styles.container}>

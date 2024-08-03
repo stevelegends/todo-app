@@ -2,10 +2,10 @@
 import {combineReducers} from '@reduxjs/toolkit';
 
 // reducers
-import {demoReducer} from './demo/slice';
+import {todoReducer} from './todo/slice';
 
 export const reducer = {
-  demoReducer,
+  todoReducer,
   // TODO add more reducer
 };
 

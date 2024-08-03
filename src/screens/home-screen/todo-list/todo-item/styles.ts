@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 
 // theme
 import {spacing} from 'src/theme/spacing';
+import {colors} from 'src/theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -10,6 +11,7 @@ export const styles = StyleSheet.create({
     height: 100,
     justifyContent: 'space-between',
     paddingHorizontal: spacing.sm,
+    backgroundColor: colors.palette.neutral100,
   },
   labelText: {
     fontSize: 20,
