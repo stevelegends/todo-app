@@ -64,6 +64,8 @@ yarn-error.log
 
 # testing
 /coverage
+*.realm
+*.realm.*
 
 # Yarn
 .yarn/*
