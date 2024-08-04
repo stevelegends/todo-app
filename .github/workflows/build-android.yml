@@ -1,0 +1,64 @@
+name: build-android
+
+env:
+  # The name of the main module repository
+  main_project_module: app
+
+on:
+  push:
+    tags:
+      - 'android(*)'
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Release Android
+          draft: false
+          prerelease: false
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Install Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Make Gradlew Executable
+        run: |
+          cd android
+          chmod +x ./gradlew
+
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Build application
+        run: |
+          cd android
+          ./gradlew assembleDebug
+
+      - name: Upload APK Debug
+        uses: actions/upload-artifact@v3
+        with:
+          name: APK(s) debug generated
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 30
