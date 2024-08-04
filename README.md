@@ -1,79 +1,57 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Node version
+> v20.x
 
-# Getting Started
-
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
-
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
+## Start the Metro Server
 
 ```bash
-# using npm
-npm start
-
-# OR using Yarn
 yarn start
 ```
 
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+## Start Application
 
 ### For Android
-
 ```bash
-# using npm
-npm run android
-
-# OR using Yarn
+/** Run */
 yarn android
+
+/** Release Github Action*/
+1. git tag -d "android(version)"
+For example: git tag -d android(1.0)
+
+2. git push origin "android(version)"
+For example: git push origin "android(1.0)"
 ```
 
 ### For iOS
-
 ```bash
-# using npm
-npm run ios
-
-# OR using Yarn
 yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+## TodoApp - Architecture and the technologies used.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+>### 1. Navigation
+> React Native Navigation to handle all the navigation requirements within the app.
 
-## Step 3: Modifying your App
+>### 2. State Management
+> The application state is managed using Redux Toolkit along with Redux Saga for handling side effects and workflows.
 
-Now that you have successfully run the app, let's modify it.
+>### 3. Animations
+> Animations using React Native Reanimated. This library allows for complex animations and interactions.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+>### 4. Component Management
+> Following the Atomic Design principles. This approach divides components into Atoms, Molecules, Organisms, making the UI development more systematic and scalable.
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+>### 5. Local Database
+> Realm as the local database to store and manage data.
 
-## Congratulations! :tada:
+>### 6. Database Security
+> The local Realm database is encrypted using AES-256 + SHA-2 encryption by providing a 64-byte encryption key when opening a realm. Realm encrypts and decrypts data transparently with standard AES-256 encryption using the first 256 bits of the 512-bit encryption key and uses the remaining 256 bits for integrity validation with HMAC.
 
-You've successfully run and modified your React Native App. :partying_face:
+>### 7. Performance Optimization
+> Optimized for performance using Hermes. JavaScript engine optimized for running React Native, reducing the app's size and improving its load time.
 
-### Now what?
+>### 8. Unit Testing
+> unit testing for create, read, update, and delete operations on the Realm database is implemented to ensure data integrity and reliability.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+>### 9. CI/CD
+> Continuous Integration and Continuous Deployment (CI/CD) are set up using GitHub Actions. This setup includes building the APK, creating tags, and releasing versions on GitHub. Automation ensures a consistent and efficient development workflow.
