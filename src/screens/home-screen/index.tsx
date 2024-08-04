@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 // modules
 import {SafeAreaView} from 'react-native';
@@ -12,8 +12,9 @@ import type {AppStackScreenProps} from 'src/navigation/main-stack';
 // components
 import {AnimatedPopup, PressableText} from 'src/components/atoms';
 import {useAnimatedPopup} from 'src/components/atoms/animated-popup/useAnimatedPopup';
-import {TodoForm} from './todo-form';
+import {TodoForm, TodoFormRef} from './todo-form';
 import {TodoList} from './todo-list';
+import {TodoEmptyView} from 'src/screens/home-screen/todo-empty-view';
 
 // theme
 import {appStyle} from 'src/theme';
@@ -29,6 +30,8 @@ export const HomeScreen = (_props: Props) => {
 
   const animatedPopup = useAnimatedPopup();
 
+  const todoFormRef = useRef<TodoFormRef>(null);
+
   const handleAddOnPress = (title: string, description: string) => {
     animatedPopup.onClose();
     dispatch(addTodoAction({title, description}));
@@ -38,6 +41,11 @@ export const HomeScreen = (_props: Props) => {
     animatedPopup.onClose();
   };
 
+  const handleOpenTodoForm = () => {
+    animatedPopup.onOpen();
+    todoFormRef.current?.focusTitle();
+  };
+
   useEffect(() => {
     function onSetHeader() {
       _props.navigation.setOptions({
@@ -45,7 +53,7 @@ export const HomeScreen = (_props: Props) => {
           <PressableText
             pressProps={{style: appStyle.buttonSizeS}}
             text="➕"
-            onPress={animatedPopup.onOpen}
+            onPress={handleOpenTodoForm}
           />
         ),
       });
@@ -55,9 +63,11 @@ export const HomeScreen = (_props: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <TodoEmptyView onPress={handleOpenTodoForm} />
       <TodoList />
       <AnimatedPopup ref={animatedPopup.ref}>
         <TodoForm
+          ref={todoFormRef}
           addOnPress={handleAddOnPress}
           cancelOnPress={handleCancelOnPress}
         />

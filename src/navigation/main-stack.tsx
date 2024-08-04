@@ -1,10 +1,12 @@
-import * as React from 'react';
+import React, {useCallback} from 'react';
 
 // modules
 import {
   createNativeStackNavigator,
   NativeStackScreenProps,
 } from '@react-navigation/native-stack';
+import {useFocusEffect} from '@react-navigation/native';
+import SplashScreen from 'react-native-splash-screen';
 
 // screens
 import * as Screen from 'src/screens';
@@ -19,6 +21,12 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> =
 const Stack = createNativeStackNavigator<AppStackParamList>();
 
 function MainStack() {
+  useFocusEffect(
+    useCallback(() => {
+      SplashScreen.hide();
+    }, []),
+  );
+
   return (
     <Stack.Navigator initialRouteName="home-screen">
       <Stack.Screen
